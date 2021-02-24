@@ -1,20 +1,9 @@
--- **********************************************
--- lab1.vhd : 8-bit Combinational ALU
---
--- Prof. Dr. Luis A. Aranda
---
--- Universidad Nebrija
---
--- **********************************************
--- LIBRARIES
--- **********************************************
+
 library IEEE;
 use IEEE.STD_LOGIC_1164.ALL;
 use IEEE.NUMERIC_STD.ALL;
 
--- **********************************************
--- ENTITY
--- **********************************************
+
 entity lab1 is
     port ( clk      : in  std_logic;
            reset    : in  std_logic;
@@ -36,7 +25,7 @@ architecture Behavioral of lab1 is
     -- ***********************
     
     -- Definición de señales
-    signal result     : std_logic_vector(8 downto 0);
+    signal result     : std_logic_vector(8 downto 0);//creo que 8 pero aux result me hace dudar si es 9
     signal symbol     : std_logic_vector(3 downto 0);
     signal aux_result : std_logic_vector(9 downto 0);
 begin
