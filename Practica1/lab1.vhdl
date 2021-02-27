@@ -39,7 +39,7 @@ architecture Behavioral of lab1 is
     -- Definición de señales
     signal result     : std_logic_vector(7 downto 0);--creo que 7 pero aux result me hace dudar si es 9
     signal symbol     : std_logic_vector(3 downto 0);
-    signal aux_result : std_logic_vector(9 downto 0);
+     signal led: std_logic_vector(7 downto 0);
 begin
      process(input1,input2,opcode, result, symbol, aux_result) begin
         case opcode is
