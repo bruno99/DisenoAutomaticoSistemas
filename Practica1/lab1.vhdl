@@ -17,9 +17,24 @@ entity lab1 is
 end lab1;
 
 architecture Behavioral of lab1 is
-    -- ***********************
-    -- Declarar componentes
-    -- ***********************
+ component display7seg is
+  port ( symbol   : in  std_logic_vector(3 downto 0);      -- Number / Letter to Display
+           segments : out std_logic_vector(6 downto 0)       -- 7 Segments
+    );
+    end component;
+    component display7segNeg is
+  port ( symbol   : in  std_logic_vector(3 downto 0);      -- Number / Letter to Display
+           segments : out std_logic_vector(6 downto 0)       -- 7 Segments
+    );
+    end component;
+    component controller7seg is
+      port( clk      : in  std_logic;                         -- FPGA Clock
+          reset    : in  std_logic;                         -- Reset
+          data_in  : in  std_logic_vector(9 downto 0);      -- Result to Display (Packed)
+          data_out : out std_logic_vector(3 downto 0);      -- Result to Display (Unpacked)
+          selector : out std_logic_vector(7 downto 0)       -- 7 Segments Anode
+    );
+    end component;
     
     -- Definición de señales
     signal result     : std_logic_vector(7 downto 0);--creo que 7 pero aux result me hace dudar si es 9
