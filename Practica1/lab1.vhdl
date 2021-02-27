@@ -1,4 +1,3 @@
-
 library IEEE;
 use IEEE.STD_LOGIC_1164.ALL;
 use IEEE.NUMERIC_STD.ALL;
@@ -37,26 +36,50 @@ architecture Behavioral of lab1 is
     end component;
     
     -- Definición de señales
-    signal result     : std_logic_vector(7 downto 0);--creo que 7 pero aux result me hace dudar si es 9
+    signal result     : std_logic_vector(7 downto 0);
     signal symbol     : std_logic_vector(3 downto 0);
-     signal led: std_logic_vector(7 downto 0);
+    signal led: std_logic_vector(7 downto 0);
+    signal data_in: std_logic_vector(9 downto 0);
 begin
-     process(input1,input2,opcode, result, symbol, aux_result) begin
+     process(input1,input2,opcode, result, symbol) begin
         case opcode is
             when "00" =>    -- Suma
                 result <= std_logic_vector('0' & UNSIGNED(input1) + UNSIGNED(input2));
             when "01" =>    -- Resta
+            if(input2 > input1) then
+            result <= std_logic_vector('0' & UNSIGNED(input2) - UNSIGNED(input1));
+            else             
                 result <= std_logic_vector('0' & UNSIGNED(input1) - UNSIGNED(input2));
+            end if;
             when "10" =>    -- Complemento a 1 del input 2
                 result <= not(input2); 
             when "11" =>    -- Multiplicación
                 result <= std_logic_vector('0' & UNSIGNED(input1) * UNSIGNED(input2));   
-                
-    -- ***********************
+       end case;
+      end process;           
     -- Conectar señales
-    -- ***********************
-    sevenSeg <= std_logic_vector(result(8 downto 0));
-    -- ***********************
-    -- Instanciar componentes
-    -- ***********************
+    symbol <= std_logic_vector(result(3 downto 0));
+    symbol <= std_logic_vector(result(7 downto 4));  
+    led(3 downto 0) <=std_logic_vector(input1);
+    led(7 downto 4) <=std_logic_vector(input2);
+    leds  <= std_logic_vector(led(7 downto 0));
+    data_in(3 downto 0) <=std_logic_vector(input1);
+    data_in(7 downto 4) <=std_logic_vector(input2);
+    data_in(9 downto 8) <=std_logic_vector(opcode);
+   
+   -- Instanciar 7seg
+
+    DISP : display7Seg port map(
+        symbol => symbol,
+        segments => sevenseg
+    );
+  --Instanciar controller
+  
+  DISP2 : controller7seg port map(
+       clk => clk,
+       reset => reset,
+       data_in => data_in,
+       data_out => symbol,
+       selector => selector     
+    );  
 end Behavioral;
