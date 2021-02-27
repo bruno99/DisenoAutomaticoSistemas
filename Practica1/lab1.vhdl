@@ -16,9 +16,6 @@ entity lab1 is
     );
 end lab1;
 
--- **********************************************
--- ARCHITECTURE
--- **********************************************
 architecture Behavioral of lab1 is
     -- ***********************
     -- Declarar componentes
