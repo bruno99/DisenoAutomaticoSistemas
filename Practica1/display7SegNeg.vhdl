@@ -14,7 +14,7 @@ begin
         case symbol is
 
             when "0000" =>
-                segments <= "1111110"; -- 0
+                segments <= "1111110"; -- Negativo
             when "0001" =>
                 segments <= "1001111"; -- 1 
             when "0010" =>
