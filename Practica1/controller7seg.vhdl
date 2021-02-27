@@ -32,13 +32,13 @@ begin
     process(LED_counter, data_in) begin
         case LED_counter is
             when "00" => 
-                data_out <= data_in(3 downto 0);
+                data_out <= data_in(3 downto 0);--un 7 seg para enseñar los resultados que requieren 2 cifra
                 selector <= x"FE";
             when "01" =>
-                data_out <= data_in(7 downto 4);
+                data_out <= data_in(7 downto 4); --un 7 seg para enseñar los resultados de las operaciones
                 selector <= x"FD"; 
             when "10" => 
-                data_out <= "00" & data_in(9 downto 8);
+                data_out <= "00" & data_in(9 downto 8);--un 7 seg para enseñar el código de operación
                 selector <= x"FB";
             when others =>
                 data_out <= "00" & data_in(9 downto 8);
