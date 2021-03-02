@@ -5,7 +5,7 @@ entity lab_tb is
 end lab_tb;
 
 architecture Behavioral of lab_tb is
-    component ALU is
+    component lab1 is
         port (input1, input2   : in  std_logic_vector(3 downto 0);
                opcode   : in  std_logic_vector(1 downto 0);
                sevenSeg : out std_logic_vector( 6 downto 0 );
@@ -21,7 +21,7 @@ architecture Behavioral of lab_tb is
     signal selector, leds: std_logic_vector( 7 downto 0 );
     signal led_negative : std_logic;
 begin
-    DUT : ALU port map(
+    DUT : lab1 port map(
     input1 => input1,
     input2 => input2,
     opcode => opcode,
