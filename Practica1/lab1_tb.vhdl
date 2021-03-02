@@ -6,7 +6,9 @@ end lab_tb;
 
 architecture Behavioral of lab_tb is
     component lab1 is
-        port (input1, input2   : in  std_logic_vector(3 downto 0);
+        port (clk      : in  std_logic;
+			  reset    : in  std_logic;
+              input1, input2   : in  std_logic_vector(3 downto 0);
                opcode   : in  std_logic_vector(1 downto 0);
                sevenSeg : out std_logic_vector( 6 downto 0 );
                selector : out std_logic_vector( 7 downto 0 );
@@ -14,7 +16,7 @@ architecture Behavioral of lab_tb is
                led_negative : out std_logic
         );
     end component;
-    
+    signal clk, reset : std_logic;
     signal input1, input2: std_logic_vector(3 downto 0);
     signal opcode: std_logic_vector(1 downto 0);
     signal sevenSeg: std_logic_vector( 6 downto 0 );
@@ -22,6 +24,8 @@ architecture Behavioral of lab_tb is
     signal led_negative : std_logic;
 begin
     DUT : lab1 port map(
+    clk      => clk,
+	reset    => reset,
     input1 => input1,
     input2 => input2,
     opcode => opcode,
@@ -30,7 +34,10 @@ begin
     leds => leds,
     led_negative => led_negative
     );
-    
+    process begin
+		clk <= '1'; wait for 10ns;
+		clk <= '0'; wait for 10ns;
+	end process;
     process begin
         input1 <= "0001"; input2 <= "1000"; opcode <= "00"; wait for 10ns;--Suma 1 + 8. Debería salir 9
         input1 <= "1100"; input2 <= "1000"; opcode <= "00"; wait for 10ns;--Suma 9 + 8. Debería salir 17, es decir 11 en hexadecimal
