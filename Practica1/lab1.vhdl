@@ -11,7 +11,8 @@ entity lab1 is
            opcode   : in  std_logic_vector(1 downto 0);
            sevenSeg : out std_logic_vector(6 downto 0);
            selector : out std_logic_vector(7 downto 0);
-           leds     : out std_logic_vector(7 downto 0)
+           leds     : out std_logic_vector(7 downto 0);
+           led_negative: out std_logic
     );
 end lab1;
 
@@ -21,11 +22,7 @@ architecture Behavioral of lab1 is
            segments : out std_logic_vector(6 downto 0)       -- 7 Segments
     );
     end component;
-    component display7segNeg is
-  port ( symbol   : in  std_logic_vector(3 downto 0);      -- Number / Letter to Display
-           segments : out std_logic_vector(6 downto 0)       -- 7 Segments
-    );
-    end component;
+    
     component controller7seg is
       port( clk      : in  std_logic;                         -- FPGA Clock
           reset    : in  std_logic;                         -- Reset
@@ -44,17 +41,20 @@ begin
      process(input1,input2,opcode, result, symbol) begin
         case opcode is
             when "00" =>    -- Suma
-                result <= std_logic_vector('0' & UNSIGNED(input1) + UNSIGNED(input2));
+                result <= std_logic_vector("0000" & UNSIGNED(input1) + UNSIGNED(input2));
             when "01" =>    -- Resta
             if(input2 > input1) then
-            result <= std_logic_vector('0' & UNSIGNED(input2) - UNSIGNED(input1));
+            result <= std_logic_vector("0000" & UNSIGNED(input2) - UNSIGNED(input1));
+            led_negative <= '1';
             else             
-                result <= std_logic_vector('0' & UNSIGNED(input1) - UNSIGNED(input2));
+                result <= std_logic_vector("0000" & UNSIGNED(input1) - UNSIGNED(input2));
             end if;
             when "10" =>    -- Complemento a 1 del input 2
-                result <= not(input2); 
+                result <= std_logic_vector("0000" & not(input2)); 
             when "11" =>    -- Multiplicación
-                result <= std_logic_vector('0' & UNSIGNED(input1) * UNSIGNED(input2));   
+                result <= std_logic_vector(UNSIGNED(input1) * UNSIGNED(input2));   
+            when others =>
+                result <= "00000000";
        end case;
       end process;           
     -- Conectar señales
