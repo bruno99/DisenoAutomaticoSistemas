@@ -26,18 +26,18 @@ architecture Behavioral of counter is
     signal c2, c0 : integer range 0 to MAX_C2C0;            -- Counters for the Hundreds and Units
     signal c1     : integer range 0 to MAX_C1;				-- Counter for the Tens
     signal n2, n1, n0 : std_logic_vector(3 downto 0);       -- Three Numbers of the Count
-    signal x : integer;
 begin
    process(clk) begin
-       x <= 0;
-        if(rising_edge(clk)) then
-            x <= x+1; --contabilizamos los flancos de subida
+       clk_count <= 0;
+       
             if(reset = '1') then
                 clk_count <= 0;
                 c2 <= 0; c1 <= 0; c0 <= 0;
             else
+             if(rising_edge(clk)) then
+             clk_count <= clk_count+1; --contabilizamos los flancos de subida
             
-              if(x REM MAX_COUNT = 0) then --si llega a 1 segundo
+              if(clk_count REM MAX_COUNT = 0) then --si llega a 1 segundo
               if(c0<MAX_C2C0)then -- si es menor que 9
               c0 <= c0 +1;
               else
