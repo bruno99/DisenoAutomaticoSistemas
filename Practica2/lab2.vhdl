@@ -91,8 +91,8 @@ process(state, startStop)
     end case;
   end process;
   --conectar señales
- symbol <= std_logic_vector(data_out(3 downto 0));     
- count <= std_logic_vector(data_in(11 downto 0)); 
+ data_out <= std_logic_vector(symbol(3 downto 0));     
+ data_in <= std_logic_vector(count(11 downto 0)); 
  
     -- Instantiate Counter
     TIME_COUNTER : counter port map(
