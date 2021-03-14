@@ -1,4 +1,5 @@
 
+
 library IEEE;
 use IEEE.STD_LOGIC_1164.ALL;
 
@@ -50,13 +51,23 @@ architecture Behavioral of lab2 is
    type states is (s0, s1, s2);
    signal state, next_state : states;  
    signal enableCounter, enableDisplay : std_logic;
+   signal symbol: std_logic_vector(3 downto 0);
+   signal count: std_logic_vector(11 downto 0);
+   signal data_in: std_logic_vector(11 downto 0);
+   signal data_out: std_logic_vector(3 downto 0);
    
 begin
-process(reset,state,clk, startStop)
-  begin
-   
+process (clk,reset) begin
+    if(reset='1') then
+      state <= s0;
+    elsif rising_edge(clk) then
+      state <= next_state; 
+    end if;
+  end process;
+  
+process(state, startStop)
+  begin 
     next_state <= state;
-
     case(state) is
       when s0 =>
          enableCounter <= '0';
@@ -79,8 +90,10 @@ process(reset,state,clk, startStop)
          when others => null;
     end case;
   end process;
-
-    
+  --conectar señales
+ symbol <= std_logic_vector(data_out(3 downto 0));     
+ count <= std_logic_vector(data_in(11 downto 0)); 
+ 
     -- Instantiate Counter
     TIME_COUNTER : counter port map(
         clk      => clk,
