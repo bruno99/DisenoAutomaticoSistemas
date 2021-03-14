@@ -28,7 +28,7 @@ architecture Behavioral of counter is
     signal n2, n1, n0 : std_logic_vector(3 downto 0);       -- Three Numbers of the Count
     signal x : integer;
 begin
-    process(clk) begin
+   process(clk) begin
        x <= 0;
         if(rising_edge(clk)) then
             x <= x+1; --contabilizamos los flancos de subida
@@ -36,7 +36,7 @@ begin
                 clk_count <= 0;
                 c2 <= 0; c1 <= 0; c0 <= 0;
             else
-             while(c2 /= 9 and c1 /= 5 and c0 /=  9)loop --mientras sea distinto que 9:59
+            
               if(x REM MAX_COUNT = 0) then --si llega a 1 segundo
               if(c0<MAX_C2C0)then -- si es menor que 9
               c0 <= c0 +1;
@@ -50,9 +50,8 @@ begin
               end if;
               end if;
               end if;
-             end loop;
-           
             
+           
             end if;
         end if;
          
