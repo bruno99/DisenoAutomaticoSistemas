@@ -1,13 +1,4 @@
--- **********************************************
--- lab2.vhd : Stopwatch without Debouncer
---
--- Prof. Dr. Luis A. Aranda
---
--- Universidad Nebrija
---
--- **********************************************
--- LIBRARIES
--- **********************************************
+
 library IEEE;
 use IEEE.STD_LOGIC_1164.ALL;
 
@@ -56,14 +47,39 @@ architecture Behavioral of lab2 is
     --******************
     -- Declarar señales
     --******************
+   type states is (s0, s1, s2);
+   signal state, next_state : states;  
+   signal enableCounter, enableDisplay : std_logic;
+   
 begin
-    --********************************
-    -- Proceso secuencial para la FSM
-    --********************************
-    
-    --***********************************
-    -- Proceso combinacional para la FSM
-    --***********************************
+process(reset,state,clk, startStop)
+  begin
+   
+    next_state <= state;
+
+    case(state) is
+      when s0 =>
+         enableCounter <= '0';
+         enableDisplay <= '0';
+         if(startStop = '1') then
+         next_state <= s1; --empieza a contar
+         end if;
+      when s1 =>
+         enableCounter <= '1';
+         enableDisplay <= '1';
+         if(startStop = '1') then
+         next_state <= s2; --se para
+         end if;
+      when s2 => 
+         enableCounter <= '0';
+         enableDisplay <= '1';
+         if(reset = '1') then
+         next_state <= s0; --reinicio
+         end if;
+         when others => null;
+    end case;
+  end process;
+
     
     -- Instantiate Counter
     TIME_COUNTER : counter port map(
