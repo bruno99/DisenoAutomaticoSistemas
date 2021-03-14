@@ -28,7 +28,6 @@ architecture Behavioral of counter is
     signal n2, n1, n0 : std_logic_vector(3 downto 0);       -- Three Numbers of the Count
 begin
    process(clk) begin
-       clk_count <= 0;
        
             if(reset = '1') then
                 clk_count <= 0;
