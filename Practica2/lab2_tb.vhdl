@@ -1,3 +1,4 @@
+
 library IEEE;
 use IEEE.STD_LOGIC_1164.ALL;
 
@@ -33,9 +34,13 @@ process begin
 		clk <= '1'; wait for 5ns;
 		clk <= '0'; wait for 5ns;
 end process;
+--process begin
+       -- reset <= '0';
+       -- wait;
+--end process;
 process begin
-startStop <= '1'; wait for 2000000000ns;
-startStop <= '1'; wait for 2000000000ns;
-reset <= '1';
+startStop <= '1'; wait for 1000000000ns;
+startStop <= '0'; wait for 1000000000ns;
+
 end process;
 end Behavioral;
