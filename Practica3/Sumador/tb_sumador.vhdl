@@ -4,13 +4,12 @@ use IEEE.STD_LOGIC_1164.ALL;
 use STD.TEXTIO.ALL;
 use ieee.std_logic_textio.all;
 
-
-entity tb_sumador is
+entity tb_sumador_n is
 --  Port ( );
-end tb_sumador;
+end tb_sumador_n;
 
-architecture Behavioral of tb_sumador is
-component add_n is
+architecture Behavioral of tb_sumador_n is
+component sumador_n is
     generic (n : integer := 8);
     Port(CLK, RST: in std_logic; 
          a, b: in std_logic_vector(n-1 downto 0);
@@ -22,7 +21,7 @@ signal CLK, RST, c_in, c_out: std_logic;
 signal a, b, s: std_logic_vector(7 downto 0);
 
 begin
-DUT: add_n generic map (n => 8) port map 
+DUT: sumador_n generic map (n => 8) port map 
 (CLK => CLK,
  RST => RST,
  a => a,
@@ -39,21 +38,35 @@ DUT: add_n generic map (n => 8) port map
 process is
    file infile, outfile : text;
    variable fstatus: file_open_status;
+   variable ESPACIO : character;
    variable wline, rline: line;
    variable datos: std_logic_vector(16 downto 0);
    
 begin
-file_open(fstatus, infile, "D:\p3.txt", read_mode);--como ignorar las comas
---while haya datos en el fichero
+file_open(fstatus, infile, "D:\p3.txt", read_mode);
+file_open(fstatus, outfile, "D:\p3out.txt", write_mode);
+
+while not endfile(infile) loop
+
 readLine(infile, rline);
 read(rline, datos);
+read (rline, ESPACIO);
+
 a <= datos(7 downto 0);
 b<= datos (15 downto 8);
 c_in <= datos(16);
+
 wait for 10ns;
---fichero en modo escritura para la salida file_open(fstatus, infile, "D:\p3out.txt", write_mode);
+
+
+write(wline, s, right, 8);
+writeline(outfile, wline);
+
+end loop;
+file_close(outfile);
 file_close(infile); wait;
 end process;
 
 
 end Behavioral;
+
