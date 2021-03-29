@@ -1,4 +1,5 @@
 
+
 library IEEE;
 use IEEE.STD_LOGIC_1164.ALL;
 use STD.TEXTIO.ALL;
@@ -40,7 +41,10 @@ process is
    variable fstatus: file_open_status;
    variable ESPACIO : character;
    variable wline, rline: line;
-   variable datos: std_logic_vector(16 downto 0);
+   variable datos_a: std_logic_vector(7 downto 0);
+   variable datos_b: std_logic_vector(15 downto 8);
+   variable datos_c: std_logic;
+   
    
 begin
 file_open(fstatus, infile, "D:\p3.txt", read_mode);
@@ -49,12 +53,15 @@ file_open(fstatus, outfile, "D:\p3out.txt", write_mode);
 while not endfile(infile) loop
 
 readLine(infile, rline);
-read(rline, datos);
+read(rline, datos_a);
 read (rline, ESPACIO);
+read(rline, datos_b);
+read (rline, ESPACIO);
+read(rline, datos_c);
 
-a <= datos(7 downto 0);
-b<= datos (15 downto 8);
-c_in <= datos(16);
+a <= datos_a;
+b<= datos_b;
+c_in <= datos_c;
 
 wait for 10ns;
 
@@ -69,4 +76,3 @@ end process;
 
 
 end Behavioral;
-
