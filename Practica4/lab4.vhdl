@@ -2,8 +2,7 @@ library IEEE;
 use IEEE.STD_LOGIC_1164.ALL;
 
 entity lab_4 is
-   port( clk, rst: in std_logic;  
-         pixel_data: in std_logic_vector(7 downto 0);
+   port( clk, rst, ena: in std_logic;  
          hsync, vsync: out std_logic;
          rgb_data: out  std_logic_vector(7 downto 0);
          read_addr: out std_logic_vector(18 downto 0)
@@ -24,7 +23,7 @@ end component;
 --define memory wrapper
 component memory_wrapper is
 port(
-    clk : IN STD_LOGIC;
+    clk, ena: IN STD_LOGIC;
     addr : IN STD_LOGIC_VECTOR(18 DOWNTO 0);
     data : OUT STD_LOGIC_VECTOR(7 DOWNTO 0)
   );
@@ -36,6 +35,7 @@ begin
 --instanciar memory_wrapper
 MEMORY: memory_wrapper port map(
 clk => clk,
+ena => ena,
 addr => addr_aux,
 data => data_wrap
 );
