@@ -1,5 +1,6 @@
 
 
+
 library IEEE;
 use IEEE.STD_LOGIC_1164.ALL;
 use STD.TEXTIO.ALL;
@@ -11,22 +12,22 @@ end tb_lab4;
 
 architecture Structural of tb_lab4 is
     component lab_4 is 
-    port( clk, rst: in std_logic;  
-         pixel_data: in std_logic_vector(7 downto 0);
+    port( clk, rst, ena: in std_logic;  
          hsync, vsync: out std_logic;
          rgb_data: out  std_logic_vector(7 downto 0);
          read_addr: out std_logic_vector(18 downto 0)
          );
     end component;
-    signal clk, rst, hsync, vsync:std_logic;  
-    signal pixel_data, rgb_data: std_logic_vector(7 downto 0);
+    signal clk, rst, hsync, vsync, ena:std_logic;  
+    signal rgb_data: std_logic_vector(7 downto 0);
     signal read_addr:std_logic_vector(18 downto 0);
 begin
-    DUT : lab_4 port map(clk => clk,
+    DUT : lab_4 port map(
+    clk => clk,
      rst=> rst,
+     ena => ena,
       hsync=>hsync,
       vsync=>vsync,      
-      pixel_data=>pixel_data,
       rgb_data=>rgb_data,
       read_addr=>read_addr);
     
@@ -47,7 +48,7 @@ variable cin_file: std_logic;
 variable COMA : character;
 begin
 
-file_open(fstatus, outfile, "C:\project_1\p4out.txt", write_mode);
+file_open(fstatus, outfile, "C:\project_2\p4out.txt", write_mode);
 assert fstatus = open_ok 
 report "error"
    severity failure;
