@@ -3,7 +3,6 @@
 
 library IEEE;
 use IEEE.STD_LOGIC_1164.ALL;
---salida de controoador a memory wrapper y viceversa
 
 entity lab_4 is
    port( clk, rst: in std_logic;  
@@ -41,16 +40,16 @@ begin
 MEMORY: memory_wrapper port map(
 clk => clk,
 addr => addr_aux,
-data => rgb_data
+data => data_wrap
 );
 --instanciar  controlador
 CONTROLLER: controlador port map(
 clk => clk,
 rst => rst,
-pixelData => pixel_data,
+pixelData => data_wrap,
 hsync => hsync,
 vsync => vsync,
-rgb_data => data_wrap,
+rgb_data => rgb_data,
 read_addr => addr_aux
 );
 --conectamos señales
