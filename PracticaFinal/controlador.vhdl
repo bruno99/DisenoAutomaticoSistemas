@@ -43,11 +43,11 @@ begin
                   hsync <= '1';
                 end if;
              else
-                if(pixelData >= "01111111") then
-                rgb_data <= "11111111";
-                else
-                rgb_data <= "00000000";
-                end if;
+                 if(pixelData(7) >= '1') then
+                 rgb_data <= "11111111";
+                 else
+                 rgb_data <= "00000000";
+                 end if;
                 vsync <= '1';
                 hsync <= '1';
              end if;
@@ -68,5 +68,5 @@ begin
          end if;
        end process;
        read_addr <= addr_aux;
-
+       
 end Behavioral;
