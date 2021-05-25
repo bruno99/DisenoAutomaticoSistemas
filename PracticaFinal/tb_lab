@@ -9,17 +9,19 @@ end tb_lab;
 
 architecture Structural of tb_lab is
     component lab_final is 
-    port( clk, rst, ena: in std_logic;  
+    port( clk, rst, ena, b1, b2: in std_logic;  
          hsync, vsync: out std_logic;
          rgb_data: out  std_logic_vector(7 downto 0);
          read_addr: out std_logic_vector(18 downto 0)
          );
     end component;
-    signal clk, rst, hsync, vsync, ena:std_logic;  
+    signal clk, rst, hsync, vsync, ena, b1, b2:std_logic;  
     signal rgb_data: std_logic_vector(7 downto 0);
     signal read_addr:std_logic_vector(18 downto 0);
 begin
     DUT : lab_final port map(
+    b1 => b1,
+    b2=> b2,
     clk => clk,
      rst=> rst,
      ena => ena,
@@ -29,12 +31,14 @@ begin
       read_addr=>read_addr);
     
     process begin
-       clk <= '1'; wait for 10ns;
-       clk <= '0'; wait for 10ns;
+       clk <= '1'; wait for 20ns;
+       clk <= '0'; wait for 20ns;
     end process;
     process begin
     ena<= '1';
     rst <= '0';
+    b1 <= '0';
+    b2 <= '1';
     wait;
     end process;
 process is 
